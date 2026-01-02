@@ -51,6 +51,16 @@ public class RentalController {
         return new MessageResponse("Rental created !");
     }
 
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public MessageResponse updateRental(@PathVariable Long id,
+                                        @RequestParam("name") String name,
+                                        @RequestParam("surface") Integer surface,
+                                        @RequestParam("price") Integer price,
+                                        @RequestParam("description") String description) {
+        rentalService.update(id, name, surface, price, description);
+        return new MessageResponse("Rental updated !");
+    }
+
     private RentalResponse toRentalResponse(Rental rental) {
         return new RentalResponse(
             rental.getId(),

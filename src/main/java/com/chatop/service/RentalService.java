@@ -65,4 +65,14 @@ public class RentalService {
         return rentalRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Rental not found"));
     }
+
+    public Rental update(Long id, String name, Integer surface, Integer price, String description) {
+        Rental rental = findById(id);
+        rental.setName(name);
+        rental.setSurface(surface);
+        rental.setPrice(price);
+        rental.setDescription(description);
+        rental.setUpdatedAt(LocalDateTime.now());
+        return rentalRepository.save(rental);
+    }
 }
