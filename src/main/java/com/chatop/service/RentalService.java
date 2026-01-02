@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -54,5 +55,14 @@ public class RentalService {
         rental.setCreatedAt(LocalDateTime.now());
         rental.setUpdatedAt(LocalDateTime.now());
         return rentalRepository.save(rental);
+    }
+
+    public List<Rental> findAll() {
+        return rentalRepository.findAll();
+    }
+
+    public Rental findById(Long id) {
+        return rentalRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Rental not found"));
     }
 }

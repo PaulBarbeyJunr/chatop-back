@@ -1,6 +1,9 @@
 package com.chatop.controller;
 
 import com.chatop.dto.MessageResponse;
+import com.chatop.dto.RentalResponse;
+import com.chatop.dto.RentalsResponse;
+import com.chatop.model.Rental;
 import com.chatop.service.RentalService;
 import com.chatop.service.UserService;
 import org.springframework.http.MediaType;
@@ -21,6 +24,20 @@ public class RentalController {
         this.userService = userService;
     }
 
+    @GetMapping
+    public RentalsResponse getAllRentals() {
+        var rentals = rentalService.findAll().stream()
+            .map(this::toRentalResponse)
+            .toList();
+        return new RentalsResponse(rentals);
+    }
+
+    @GetMapping("/{id}")
+    public RentalResponse getRental(@PathVariable Long id) {
+        Rental rental = rentalService.findById(id);
+        return toRentalResponse(rental);
+    }
+
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public MessageResponse createRental(@RequestParam("name") String name,
                                         @RequestParam("surface") Integer surface,
@@ -32,5 +49,19 @@ public class RentalController {
         String pictureUrl = rentalService.savePicture(picture);
         rentalService.create(name, surface, price, pictureUrl, description, user.getId());
         return new MessageResponse("Rental created !");
+    }
+
+    private RentalResponse toRentalResponse(Rental rental) {
+        return new RentalResponse(
+            rental.getId(),
+            rental.getName(),
+            rental.getSurface(),
+            rental.getPrice(),
+            rental.getPicture(),
+            rental.getDescription(),
+            rental.getOwnerId(),
+            rental.getCreatedAt(),
+            rental.getUpdatedAt()
+        );
     }
 }
