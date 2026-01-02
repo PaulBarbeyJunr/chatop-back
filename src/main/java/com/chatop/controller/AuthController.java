@@ -32,12 +32,12 @@ public class AuthController {
         return new AuthResponse(jwtUtil.generateToken(user.getEmail()));
     }
 
-    @PostMapping("/email")
+    @PostMapping("/login")
     public AuthResponse login(@RequestBody LoginRequest request) {
         authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(request.login(), request.password())
+            new UsernamePasswordAuthenticationToken(request.email(), request.password())
         );
-        return new AuthResponse(jwtUtil.generateToken(request.login()));
+        return new AuthResponse(jwtUtil.generateToken(request.email()));
     }
 
     @GetMapping("/me")
