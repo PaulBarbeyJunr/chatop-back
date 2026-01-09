@@ -22,6 +22,9 @@ public class RentalService {
     @Value("${upload.path:uploads}")
     private String uploadPath;
 
+    @Value("${server.base-url:http://localhost:3001}")
+    private String baseUrl;
+
     public RentalService(RentalRepository rentalRepository) {
         this.rentalRepository = rentalRepository;
     }
@@ -38,7 +41,7 @@ public class RentalService {
             String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
             Path filePath = uploadDir.resolve(filename);
             Files.copy(file.getInputStream(), filePath);
-            return "/uploads/" + filename;
+            return baseUrl + "/api/uploads/" + filename;
         } catch (IOException e) {
             throw new RuntimeException("Failed to save picture", e);
         }
