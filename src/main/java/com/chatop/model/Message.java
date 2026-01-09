@@ -1,28 +1,24 @@
 package com.chatop.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "messages")
+public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    private String name;
+    @Column(columnDefinition = "TEXT")
+    private String message;
 
-    @Email
-    @NotBlank
-    @Column(unique = true)
-    private String email;
+    @Column(name = "user_id")
+    private Long userId;
 
-    @NotBlank
-    private String password;
+    @Column(name = "rental_id")
+    private Long rentalId;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -30,19 +26,19 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public User() {}
+    public Message() {}
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getMessage() { return message; }
+    public void setMessage(String message) { this.message = message; }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public Long getRentalId() { return rentalId; }
+    public void setRentalId(Long rentalId) { this.rentalId = rentalId; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
