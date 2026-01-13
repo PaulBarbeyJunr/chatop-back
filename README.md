@@ -28,11 +28,25 @@ cd chatop
 
 ### 2. Configurer la base de données
 
-Créer une base de données MySQL :
+#### Installation de MySQL
+
+1. Télécharger et installer [MySQL](https://dev.mysql.com/downloads/mysql/) ou [XAMPP](https://www.apachefriends.org/)
+2. Démarrer le serveur MySQL
+
+#### Création de la base de données
+
+Se connecter à MySQL et créer la base de données :
+
+```bash
+mysql -u root -p
+```
 
 ```sql
 CREATE DATABASE chatop;
+USE chatop;
 ```
+
+Les tables seront créées automatiquement au premier lancement de l'application grâce à Hibernate (`spring.jpa.hibernate.ddl-auto=update`).
 
 ### 3. Configuration
 
